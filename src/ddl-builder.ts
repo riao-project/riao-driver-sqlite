@@ -5,6 +5,7 @@ import {
 	CreateDatabaseOptions,
 	DataDefinitionBuilder,
 	DropDatabaseOptions,
+	TruncateOptions,
 } from '@riao/dbal';
 import { SqliteBuilder } from './sql-builder';
 
@@ -17,6 +18,12 @@ export class SqliteDataDefinitionBuilder extends DataDefinitionBuilder {
 			INT: 'INTEGER',
 			BIGINT: 'INTEGER',
 		};
+	}
+
+	public truncate(options: TruncateOptions): this {
+		this.sql.append('DELETE FROM "' + options.table + '"; ');
+
+		return this;
 	}
 
 	public createTablePrimaryKeys(names: string[]): this {
