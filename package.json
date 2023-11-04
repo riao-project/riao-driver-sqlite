@@ -1,7 +1,7 @@
 {
-	"name": "{{project-name}}",
+	"name": "riao-driver-sqlite",
 	"version": "1.0.0",
-	"description": "{{project-name}}",
+	"description": "riao-driver-sqlite",
 	"private": "true",
 	"typescript-template": {
 		"base": "1.0.0",
@@ -42,13 +42,13 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/{{project-org}}/{{project-name}}.git"
+		"url": "git+https://github.com/riao-driver-sqlite/riao-driver-sqlite.git"
 	},
-	"author": "{{project-org}}",
+	"author": "riao-driver-sqlite",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/{{project-org}}/{{project-name}}/issues"
+		"url": "https://github.com/riao-driver-sqlite/riao-driver-sqlite/issues"
 	},
-	"homepage": "https://github.com/{{project-org}}/{{project-name}}#readme",
+	"homepage": "https://github.com/riao-driver-sqlite/riao-driver-sqlite#readme",
 	"keywords": []
 }
