@@ -101,9 +101,14 @@ export class SqliteDriver extends DatabaseDriver {
 			);
 		}
 
-		return {
-			results: Array.isArray(rows) ? rows : [rows],
-		};
+		if (rows === undefined) {
+			return {};
+		}
+		else {
+			return {
+				results: Array.isArray(rows) ? rows : [rows],
+			};
+		}
 	}
 
 	public async getVersion(): Promise<string> {
