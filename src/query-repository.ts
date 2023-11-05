@@ -38,7 +38,13 @@ export class SqliteQueryRepository<
 						(keySchema.type === 'TIMESTAMP' ||
 							keySchema.type === 'DATE')
 					) {
-						results[i][key] = <any>new Date(result[key]);
+						let val: string = <any>result[key];
+
+						if (!val.includes('Z')) {
+							val += 'Z';
+						}
+
+						results[i][key] = <any>new Date(val);
 					}
 				}
 			}
