@@ -27,10 +27,12 @@ function getErrorMsg(options: {
 
 export class SqliteDriver extends DatabaseDriver {
 	public conn: sqlite;
+	protected options: SqliteConnectionOptions;
 
 	public async connect(options: SqliteConnectionOptions): Promise<this> {
 		try {
 			this.conn = new sqlite(options.database, null);
+			this.options = options;
 		}
 		catch (error) {
 			throw new Error(getErrorMsg({ op: 'connect', error }));
@@ -125,11 +127,11 @@ export class SqliteDriver extends DatabaseDriver {
 	): Promise<T> {
 		let result: T;
 
-		// transaction.driver.conn = this.conn;
-		// transaction.ddl.setDriver(transaction.driver);
-		// transaction.query.setDriver(transaction.driver);
+		transaction.driver.conn = this.conn;
+		transaction.ddl.setDriver(transaction.driver);
+		transaction.query.setDriver(transaction.driver);
 
-		await this.query({ sql: 'START TRANSACTION;' });
+		await this.query({ sql: 'BEGIN TRANSACTION;' });
 
 		try {
 			result = await fn(transaction);
