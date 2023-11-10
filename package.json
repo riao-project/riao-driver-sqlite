@@ -26,6 +26,9 @@
 		"@riao/driver-test": "^2.0.0",
 		"better-sqlite3": "^9.0.0"
 	},
+	"peerDependencies": {
+		"@riao/dbal": "^2.0.0"
+	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",
 		"@types/jasmine": "^4.3.0",
