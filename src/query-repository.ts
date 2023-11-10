@@ -11,7 +11,7 @@ export class SqliteQueryRepository<
 
 		if (insertOptions.primaryKey) {
 			return <any>{
-				[insertOptions.primaryKey]: result[0].lastInsertRowid,
+				[insertOptions.primaryKey]: result.lastInsertRowid,
 			};
 		}
 		else {
