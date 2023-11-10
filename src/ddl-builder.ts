@@ -1,4 +1,5 @@
 import {
+	AddForeignKeyOptions,
 	BaseIntColumnOptions,
 	ColumnOptions,
 	ColumnType,
@@ -58,5 +59,17 @@ export class SqliteDataDefinitionBuilder extends DataDefinitionBuilder {
 	public dropDatabase(options: DropDatabaseOptions): this {
 		// TODO: Do this in the repo instead, and remove the db file?
 		return this;
+	}
+
+	public addForeignKey(options: AddForeignKeyOptions): this {
+		throw new Error(
+			'Adding foreign key to an existing table is not supported by sqlite.'
+		);
+	}
+
+	public alterColumnStatement(column: string): this {
+		throw new Error(
+			'Altering an existing column is not supported by sqlite.'
+		);
 	}
 }
