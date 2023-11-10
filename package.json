@@ -50,13 +50,13 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/riao-driver-sqlite/riao-driver-sqlite.git"
+		"url": "git+https://github.com/riao-project/riao-driver-sqlite.git"
 	},
-	"author": "riao-driver-sqlite",
+	"author": "riao",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/riao-driver-sqlite/riao-driver-sqlite/issues"
+		"url": "https://github.com/riao-project/riao-driver-sqlite/issues"
 	},
-	"homepage": "https://github.com/riao-driver-sqlite/riao-driver-sqlite#readme",
+	"homepage": "https://github.com/riao-project/riao-driver-sqlite#readme",
 	"keywords": []
 }
