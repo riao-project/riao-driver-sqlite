@@ -1,6 +1,6 @@
 {
 	"name": "@riao/sqlite",
-	"version": "3.0.0",
+	"version": "3.1.0",
 	"description": "riao-driver-sqlite",
 	"private": "true",
 	"typescript-template": {
@@ -22,15 +22,15 @@
 		"publish": "npm run script -- publish"
 	},
 	"dependencies": {
-		"@riao/dbal": "^3.0.1",
+		"@riao/dbal": "^3.1.0",
 		"better-sqlite3": "^9.2.2"
 	},
 	"peerDependencies": {
-		"@riao/dbal": "^3.0.0"
+		"@riao/dbal": "^3.1.0"
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",
-		"@riao/driver-test": "^3.0.0",
+		"@riao/driver-test": "^3.1.0",
 		"@types/jasmine": "^4.3.0",
 		"@types/node": "^18.11.9",
 		"@typescript-eslint/eslint-plugin": "^5.44.0",
