@@ -9,8 +9,11 @@ import {
 	TruncateOptions,
 } from '@riao/dbal';
 import { SqliteBuilder } from './sql-builder';
+import { SqliteQueryBuilder } from './query-builder';
 
 export class SqliteDataDefinitionBuilder extends DataDefinitionBuilder {
+	protected queryBuilderType = SqliteQueryBuilder;
+
 	public constructor() {
 		super();
 
