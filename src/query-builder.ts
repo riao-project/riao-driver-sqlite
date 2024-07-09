@@ -26,4 +26,19 @@ export class SqliteQueryBuilder extends DatabaseQueryBuilder {
 
 		return this;
 	}
+
+	public override year(fn: DatabaseFunction): this {
+		this.sql.append('strftime(\'%Y\', ');
+
+		if (fn.params?.expr) {
+			this.expression(fn.params.expr);
+		}
+		else {
+			this.expression(DatabaseFunctions.currentTimestamp());
+		}
+
+		this.sql.closeParens();
+
+		return this;
+	}
 }
