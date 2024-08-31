@@ -24,6 +24,18 @@ export class SqliteDataDefinitionBuilder extends DataDefinitionBuilder {
 		};
 	}
 
+	public disableForeignKeyChecks(): this {
+		this.sql.append('PRAGMA foreign_keys = OFF');
+
+		return this;
+	}
+
+	public enableForeignKeyChecks(): this {
+		this.sql.append('PRAGMA foreign_keys = ON');
+
+		return this;
+	}
+
 	public truncate(options: TruncateOptions): this {
 		this.sql.append('DELETE FROM "' + options.table + '"; ');
 

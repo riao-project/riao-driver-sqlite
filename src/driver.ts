@@ -77,7 +77,10 @@ export class SqliteDriver extends DatabaseDriver {
 		let rows;
 		let retrieverFn: 'get' | 'all' | 'run';
 
-		if (sql.startsWith('SELECT') || sql.startsWith('PRAGMA')) {
+		if (
+			sql.startsWith('SELECT') ||
+			(sql.startsWith('PRAGMA') && !sql.includes('='))
+		) {
 			if (sql.endsWith('LIMIT 1')) {
 				retrieverFn = 'get';
 			}
