@@ -1,4 +1,9 @@
-import { DatabaseFunctions, DatabaseQueryBuilder } from '@riao/dbal';
+import {
+	columnName,
+	DatabaseFunctions,
+	DatabaseQueryBuilder,
+	Expression,
+} from '@riao/dbal';
 import { SqliteBuilder } from './sql-builder';
 import { DatabaseFunction } from '@riao/dbal/functions/function-token';
 
@@ -40,5 +45,20 @@ export class SqliteQueryBuilder extends DatabaseQueryBuilder {
 		this.sql.closeParens();
 
 		return this;
+	}
+
+	public override triggerSetValue(options: {
+		table: string;
+		idColumn: string;
+		column: string;
+		value: Expression;
+	}): this {
+		const key = options.idColumn;
+
+		return this.update({
+			table: options.table,
+			set: { [options.column]: options.value },
+			where: { [`${options.table}.${key}`]: columnName('NEW.' + key) },
+		});
 	}
 }
