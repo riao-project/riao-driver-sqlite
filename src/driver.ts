@@ -53,67 +53,76 @@ export class SqliteDriver extends DatabaseDriver {
 	public async query(
 		options: DatabaseQueryTypes
 	): Promise<DatabaseQueryResult> {
-		let { sql, params } = this.toDatabaseQueryOptions(options);
-		params = params ?? [];
-		params = params.map((param) => {
-			if (param === true) {
-				return 1;
+		const queries = this.toDatabaseQueryOptions(options);
+		let result;
+
+		for (const query of queries) {
+			let { sql, params } = query;
+			params = params ?? [];
+
+			params = params.map((param) => {
+				if (param === true) {
+					return 1;
+				}
+				else if (param === false) {
+					return 0;
+				}
+				else if (param instanceof Date) {
+					return param.toISOString();
+				}
+				else {
+					return param;
+				}
+			});
+
+			if (!sql) {
+				result = {};
+				continue;
 			}
-			else if (param === false) {
-				return 0;
-			}
-			else if (param instanceof Date) {
-				return param.toISOString();
+
+			let rows;
+			let retrieverFn: 'get' | 'all' | 'run';
+
+			if (
+				sql.startsWith('SELECT') ||
+				(sql.startsWith('PRAGMA') && !sql.includes('='))
+			) {
+				if (sql.endsWith('LIMIT 1')) {
+					retrieverFn = 'get';
+				}
+				else {
+					retrieverFn = 'all';
+				}
 			}
 			else {
-				return param;
+				retrieverFn = 'run';
 			}
-		});
 
-		if (!sql) {
-			return {};
-		}
+			try {
+				rows = await this.conn.prepare(sql)[retrieverFn](params);
+			}
+			catch (error) {
+				throw new Error(
+					getErrorMsg({
+						op: `query ${retrieverFn}`,
+						error,
+						sql,
+						params,
+					})
+				);
+			}
 
-		let rows;
-		let retrieverFn: 'get' | 'all' | 'run';
-
-		if (
-			sql.startsWith('SELECT') ||
-			(sql.startsWith('PRAGMA') && !sql.includes('='))
-		) {
-			if (sql.endsWith('LIMIT 1')) {
-				retrieverFn = 'get';
+			if (rows === undefined) {
+				result = {};
+				continue;
 			}
 			else {
-				retrieverFn = 'all';
+				result = { results: Array.isArray(rows) ? rows : [rows] };
+				continue;
 			}
 		}
-		else {
-			retrieverFn = 'run';
-		}
 
-		try {
-			rows = this.conn.prepare(sql)[retrieverFn](params);
-		}
-		catch (error) {
-			throw new Error(
-				getErrorMsg({
-					op: `query ${retrieverFn}`,
-					error,
-					sql,
-					params,
-				})
-			);
-		}
-
-		if (rows === undefined) {
-			return {};
-		}
-		else {
-			return {
-				results: Array.isArray(rows) ? rows : [rows],
-			};
-		}
+		return result;
 	}
 
 	public async getVersion(): Promise<string> {
