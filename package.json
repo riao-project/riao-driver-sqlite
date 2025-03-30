@@ -1,6 +1,6 @@
 {
 	"name": "@riao/sqlite",
-	"version": "3.3.0",
+	"version": "3.4.0",
 	"description": "riao-driver-sqlite",
 	"private": "true",
 	"typescript-template": {

@@ -6,6 +6,7 @@ import {
 	CreateDatabaseOptions,
 	DataDefinitionBuilder,
 	DropDatabaseOptions,
+	TriggerOptions,
 	TruncateOptions,
 } from '@riao/dbal';
 import { SqliteBuilder } from './sql-builder';
@@ -86,5 +87,13 @@ export class SqliteDataDefinitionBuilder extends DataDefinitionBuilder {
 		throw new Error(
 			'Altering an existing column is not supported by sqlite.'
 		);
+	}
+
+	public override createTrigger(options: TriggerOptions): this {
+		if (options.event === 'INSERT' && options.timing === 'BEFORE') {
+			options.timing = 'AFTER';
+		}
+
+		return super.createTrigger(options);
 	}
 }

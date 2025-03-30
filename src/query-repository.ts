@@ -22,9 +22,10 @@ export class SqliteQueryRepository<
 	public async find(selectQuery: SelectQuery<T>): Promise<T[]> {
 		const results = await super.find(selectQuery);
 
-		const tableSchema = selectQuery.table
-			? this.schema?.tables[selectQuery.table]
-			: null;
+		const tableSchema =
+			selectQuery.table && typeof selectQuery.table === 'string'
+				? this.schema?.tables[selectQuery.table]
+				: null;
 
 		if (tableSchema) {
 			for (let i = 0; i < results.length; i++) {
