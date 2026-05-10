@@ -1,22 +1,33 @@
 import 'jasmine';
+import { ColumnType } from '@riao/dbal/column/column-type';
+import type { QueryRepositoryOptions } from '@riao/dbal/dml/query-repository';
 import { SqliteQueryBuilder } from '../../src/query-builder';
 import { SqliteQueryRepository } from '../../src/query-repository';
 
 describe('SqliteQueryRepository', () => {
 	it('does not throw on null timestamp values', async () => {
-		const repository = new SqliteQueryRepository({
+		const options: QueryRepositoryOptions = {
 			queryBuilderType: SqliteQueryBuilder,
-		} as any);
+		};
+		const repository = new SqliteQueryRepository(options);
 
-		(repository as any).schema = {
-			tables: {
-				users: {
-					columns: {
-						createdAt: { type: 'TIMESTAMP' },
+		repository.init({
+			driver: {} as any,
+			schema: {
+				tables: {
+					users: {
+						name: 'users',
+						type: 'table',
+						columns: {
+							createdAt: {
+								name: 'createdAt',
+								type: ColumnType.TIMESTAMP,
+							},
+						},
 					},
 				},
 			},
-		};
+		});
 
 		const parentPrototype = Object.getPrototypeOf(
 			SqliteQueryRepository.prototype
