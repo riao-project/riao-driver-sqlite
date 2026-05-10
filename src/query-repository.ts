@@ -45,12 +45,8 @@ export class SqliteQueryRepository<
 							continue;
 						}
 
-						if (!val.includes('Z')) {
-							results[i][key] = <any>new Date(val + 'Z');
-						}
-						else {
-							results[i][key] = <any>new Date(val);
-						}
+						const dateVal = val.includes('Z') ? val : val + 'Z';
+						results[i][key] = <any>new Date(dateVal);
 					}
 				}
 			}
