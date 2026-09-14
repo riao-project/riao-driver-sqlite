@@ -62,6 +62,21 @@ export class SqliteQueryBuilder extends DatabaseQueryBuilder {
 		return this;
 	}
 
+	public override month(fn: DatabaseFunction): this {
+		this.sql.append('strftime(\'%m\', ');
+
+		if (fn.params?.expr) {
+			this.expression(fn.params.expr);
+		}
+		else {
+			this.expression(DatabaseFunctions.currentTimestamp());
+		}
+
+		this.sql.closeParens();
+
+		return this;
+	}
+
 	public override triggerSetValue(options: {
 		table: string;
 		idColumn: string;
