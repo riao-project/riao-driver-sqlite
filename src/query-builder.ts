@@ -17,9 +17,8 @@ export class SqliteQueryBuilder extends DatabaseQueryBuilder {
 		return SqliteBuilder;
 	}
 
-	// SQLite doesn't support wrapping outer SELECT in parentheses for INTERSECT
-	// with WHERE clauses (syntax error)
-	protected shouldWrapIntersectQuery(): boolean {
+	// SQLite doesn't support wrapping compound SELECT operands in parentheses.
+	protected shouldWrapIntersectExceptQuery(): boolean {
 		return false;
 	}
 
@@ -29,6 +28,15 @@ export class SqliteQueryBuilder extends DatabaseQueryBuilder {
 		this.sql.trimEnd(' ');
 		this.sql.append(all ? ' INTERSECT ALL ' : ' INTERSECT ');
 		// Inline the query without Subquery wrapping (no parentheses)
+		this.select(query);
+		this.sql.space();
+
+		return this;
+	}
+
+	public exceptWithSubquery(query: SelectQuery, all = false): this {
+		this.sql.trimEnd(' ');
+		this.sql.append(all ? ' EXCEPT ALL ' : ' EXCEPT ');
 		this.select(query);
 		this.sql.space();
 
