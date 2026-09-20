@@ -22,6 +22,7 @@ export class SqliteDataDefinitionBuilder extends DataDefinitionBuilder {
 			...this.columnTypes,
 			INT: 'INTEGER',
 			BIGINT: 'INTEGER',
+			JSON: 'TEXT',
 		};
 	}
 
